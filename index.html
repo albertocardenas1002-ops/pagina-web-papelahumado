@@ -11,7 +11,10 @@
             box-sizing: border-box;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-        body {
+        html, body {
+            width: 100%;
+            max-width: 100%;
+            overflow-x: hidden; /* Evita desplazamiento horizontal en teléfonos */
             background-color: #eef2f5;
             color: #2c3e50;
             padding-bottom: 3rem;
@@ -254,7 +257,7 @@
         /* Galería Antes y Después */
         .comparison-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
             gap: 2rem;
         }
         .comparison-card {
@@ -296,7 +299,7 @@
         
         .img-box img {
             width: 100%;
-            height: 160px;
+            height: 150px;
             border-radius: 6px;
             object-fit: cover;
         }
@@ -304,7 +307,7 @@
         /* Sección Comentarios / Testimonios */
         .reviews-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 1.5rem;
         }
         .review-card {
@@ -411,11 +414,47 @@
         .float-whatsapp:hover {
             transform: scale(1.1);
         }
+
+        /* --- ADAPTACIÓN EXCLUSIVA PARA TELÉFONOS (RESPONSIVE) --- */
+        @media (max-width: 768px) {
+            nav {
+                flex-direction: column;
+                padding: 1rem;
+                gap: 0.8rem;
+                text-align: center;
+            }
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 0.8rem 1.2rem;
+            }
+            .nav-links a {
+                font-size: 0.85rem;
+            }
+            header {
+                padding: 2.5rem 1rem;
+            }
+            header h1 {
+                font-size: 1.6rem;
+            }
+            header p {
+                font-size: 0.95rem;
+            }
+            .section-title {
+                font-size: 1.5rem;
+            }
+            .tech-grid, .grid, .benefits-grid, .comparison-grid, .reviews-grid {
+                grid-template-columns: 100%;
+            }
+            .contact-box {
+                padding: 1.5rem 1rem;
+            }
+        }
     </style>
 </head>
 <body>
 
-    <!-- Barra de Navegación Fija -->
+<!-- Barra de Navegación Fija -->
     <nav>
         <div class="nav-logo">ALBERTO <span>CÁRDENAS</span></div>
         <ul class="nav-links">
@@ -529,7 +568,7 @@
                 </div>
                 <div class="card">
                     <h3>Papel de Seguridad a Color</h3>
-                    <p>Combina la máxima fuerza estructural antivandálica con la privacidad y el estilo de las tonalidades oscuras. Protección reforzada con elegancia visual.</p>
+                    <p>Combina la máxima fuerza estructural antivandálica con la privacidad y el estilo de las tonalidades oscuras. Protección reinforced con elegancia visual.</p>
                 </div>
             </div>
         </div>
@@ -569,7 +608,7 @@
                 </div>
             </div>
         </div>
-      
+
         <!-- SECCIÓN OPINIONES -->
         <div id="opiniones" class="page-section">
             <h2 class="section-title">Lo que dicen nuestros clientes</h2>
