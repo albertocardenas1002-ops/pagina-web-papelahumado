@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Papel Ahumado & Seguridad - Alberto Cárdenas</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body {
+            background-color: #eef2f5;
+            color: #2c3e50;
+            padding-bottom: 3rem;
+        }
+        
+        /* Barra de Navegación Fija */
+        nav {
+            background-color: #ffffff;
+            border-bottom: 2px solid #dce1e7;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+        }
+        .nav-logo {
+            color: #0f172a;
+            font-weight: 800;
+            font-size: 1.25rem;
+            letter-spacing: 1px;
+        }
+        .nav-logo span {
+            color: #0056b3;
+        }
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 1.8rem;
+        }
+        .nav-links a {
+            color: #334155;
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: color 0.2s;
+            padding-bottom: 4px;
+        }
+        .nav-links a:hover, .nav-links a.active {
+            color: #0056b3;
+            border-bottom: 2px solid #0056b3;
+        }
+
+        header {
+            background: linear-gradient(135deg, #0f172a, #1e293b);
+            color: #ffffff;
+            padding: 3.5rem 1rem;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        header h1 {
+            font-size: 2.3rem;
+            letter-spacing: 1px;
+            font-weight: 800;
+        }
+        header p {
+            color: #e2e8f0;
+            margin-top: 0.6rem;
+            font-size: 1.1rem;
+        }
+        .container {
+            max-width: 1100px;
+            margin: 2.5rem auto;
+            padding: 0 1rem;
+        }
+        
+        /* Control de Secciones */
+        .page-section {
+            display: none;
+            animation: fadeIn 0.4s ease-in-out;
+        }
+        .page-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: #0f172a;
+            font-size: 1.9rem;
+            border-bottom: 3px solid #cbd5e1;
+            padding-bottom: 0.6rem;
+            font-weight: 800;
+        }
+
+        .subsection-title {
+            color: #0f172a;
+            font-size: 1.4rem;
+            margin: 2.5rem 0 1.2rem 0;
+            padding-left: 0.8rem;
+            border-left: 5px solid #0056b3;
+            font-weight: 800;
+        }
+
+        /* Estilos de Tarjetas */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+        .card {
+            background: #ffffff;
+            border: 1px solid #cbd5e1;
+            border-radius: 12px;
+            padding: 2rem 1.6rem;
+            text-align: center;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.06);
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 24px rgba(0,0,0,0.12);
+            border-color: #0056b3;
+        }
+        .card h3 {
+            color: #0056b3;
+            margin-bottom: 0.9rem;
+            font-size: 1.35rem;
+            font-weight: 700;
+        }
+        .card p {
+            color: #334155;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            font-weight: 500;
+        }
+        
+        /* Tarjetas de la Sección Inicio */
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            margin-top: 1.5rem;
+        }
+        .tech-card {
+            background: #ffffff;
+            border-left: 5px solid #0056b3;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.06);
+            border-top: 1px solid #e2e8f0;
+            border-right: 1px solid #e2e8f0;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        .tech-card h3 {
+            color: #0f172a;
+            margin-bottom: 0.8rem;
+            font-size: 1.35rem;
+            font-weight: 700;
+        }
+        .tech-card p {
+            color: #334155;
+            line-height: 1.6;
+            font-size: 0.95rem;
+            margin-bottom: 1.2rem;
+            font-weight: 500;
+        }
+        .tech-list {
+            list-style: none;
+            color: #1e293b;
+            font-size: 0.92rem;
+            font-weight: 600;
+        }
+        .tech-list li {
+            margin-bottom: 0.6rem;
+            display: flex;
+            align-items: center;
+        }
+        .tech-list li::before {
+            content: "✓";
+            color: #0056b3;
+            font-weight: 900;
+            margin-right: 10px;
+        }
+
+        /* Banner Experiencia & Servicio a Domicilio */
+        .experience-banner {
+            background: linear-gradient(135deg, #0056b3, #0f172a);
+            color: #ffffff;
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+            margin-bottom: 2rem;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.08);
+        }
+        .experience-banner h3 {
+            font-size: 1.6rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+        }
+        .experience-banner p {
+            font-size: 1.05rem;
+            color: #e2e8f0;
+            margin-bottom: 0.8rem;
+        }
+        .location-badge {
+            display: inline-block;
+            background-color: #25d366;
+            color: #ffffff;
+            padding: 0.5rem 1.2rem;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 0.95rem;
+        }
+
+        /* Tarjetas de Beneficios */
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1.5rem;
+        }
+        .benefit-card {
+            background: #ffffff;
+            border: 1px solid #cbd5e1;
+            padding: 1.8rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+        .benefit-card h4 {
+            color: #0056b3;
+            margin-bottom: 0.6rem;
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+        .benefit-card p {
+            color: #334155;
+            font-size: 0.93rem;
+            line-height: 1.5;
+            font-weight: 500;
+        }
+
+        /* Galería Antes y Después */
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+        .comparison-card {
+            background: #ffffff;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid #cbd5e1;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.06);
+        }
+        .comparison-title {
+            background: #0f172a;
+            padding: 1rem;
+            text-align: center;
+            font-weight: 800;
+            color: #ffffff;
+        }
+        .image-container {
+            display: flex;
+            background: #e2e8f0;
+        }
+        .img-box {
+            width: 50%;
+            padding: 1rem;
+            text-align: center;
+            border-right: 1px solid #cbd5e1;
+        }
+        .img-box:last-child {
+            border-right: none;
+        }
+        .img-box span {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 0.85rem;
+            font-weight: 800;
+            text-transform: uppercase;
+        }
+        .before { color: #dc2626; }
+        .after { color: #16a34a; }
+        
+        .img-box img {
+            width: 100%;
+            height: 160px;
+            border-radius: 6px;
+            object-fit: cover;
+        }
+
+        /* Sección Comentarios / Testimonios */
+        .reviews-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        .review-card {
+            background: #ffffff;
+            border: 1px solid #cbd5e1;
+            border-radius: 12px;
+            padding: 1.8rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+        .stars {
+            color: #f59e0b;
+            font-size: 1.2rem;
+            margin-bottom: 0.6rem;
+        }
+        .review-card p {
+            color: #334155;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            font-style: italic;
+            margin-bottom: 1rem;
+        }
+        .reviewer-name {
+            color: #0f172a;
+            font-weight: 700;
+            font-size: 0.9rem;
+            text-align: right;
+        }
+
+        /* Sección de Contacto */
+        .contact-box {
+            background: #ffffff;
+            border: 1px solid #cbd5e1;
+            border-radius: 12px;
+            padding: 2.5rem;
+            max-width: 700px;
+            margin: 0 auto;
+            text-align: center;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.06);
+        }
+        .contact-box h3 {
+            color: #0f172a;
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            font-weight: 800;
+        }
+        .contact-box .sub-name {
+            color: #0056b3;
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+        }
+        .contact-box p {
+            color: #334155;
+            font-size: 1rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+        .phone-numbers {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        .whatsapp-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            background-color: #25d366;
+            color: white;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.05rem;
+            padding: 0.9rem 1.8rem;
+            border-radius: 30px;
+            box-shadow: 0 4px 10px rgba(37, 211, 102, 0.3);
+            transition: transform 0.2s, background-color 0.2s;
+        }
+        .whatsapp-btn:hover {
+            background-color: #1eb956;
+            transform: scale(1.02);
+        }
+
+        /* Botón Flotante de WhatsApp */
+        .float-whatsapp {
+            position: fixed;
+            width: 60px;
+            height: 60px;
+            bottom: 25px;
+            right: 25px;
+            background-color: #25d366;
+            color: #FFF;
+            border-radius: 50px;
+            text-align: center;
+            font-size: 30px;
+            box-shadow: 2px 2px 10px rgba(0,0,0,0.3);
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            transition: transform 0.2s;
+        }
+        .float-whatsapp:hover {
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Barra de Navegación Fija -->
+    <nav>
+        <div class="nav-logo">ALBERTO <span>CÁRDENAS</span></div>
+        <ul class="nav-links">
+            <li><a onclick="cambiarSeccion('inicio', this)" class="active">Inicio</a></li>
+            <li><a onclick="cambiarSeccion('beneficios', this)">Beneficios</a></li>
+            <li><a onclick="cambiarSeccion('tonalidades', this)">Tonalidades</a></li>
+            <li><a onclick="cambiarSeccion('resultados', this)">Resultados</a></li>
+            <li><a onclick="cambiarSeccion('opiniones', this)">Opiniones</a></li>
+            <li><a onclick="cambiarSeccion('contacto', this)">Contacto</a></li>
+        </ul>
+    </nav>
+
+    <header>
+        <h1>PAPEL AHUMADO & PAPEL DE SEGURIDAD</h1>
+        <p>Instalación profesional a domicilio en toda Caracas | Más de 25 años de trayectoria</p>
+    </header>
+
+    <div class="container">
+        
+        <!-- SECCIÓN INICIO -->
+        <div id="inicio" class="page-section active">
+            
+            <div class="experience-banner">
+                <h3>Alberto Cárdenas | Especialista Automotriz</h3>
+                <p>Más de 25 años de experiencia garantizando acabados impecables en papel ahumado y láminas de seguridad.</p>
+                <div class="location-badge">🚗 Servicio a domicilio en cualquier zona de Caracas</div>
+            </div>
+
+            <h2 class="section-title">Soluciones Automotrices de Alta Gama</h2>
+            <p style="text-align: center; color: #1e293b; font-size: 1.05rem; line-height: 1.6; max-width: 800px; margin: 0 auto 2rem auto; font-weight: 600;">
+                Especialistas en la instalación profesional de láminas para vehículos sin moverte de casa o trabajo. Protege a tu familia y mejora la estética de tu carro o camioneta con tecnología de punta.
+            </p>
+
+            <div class="tech-grid">
+                <!-- Papel Ahumado -->
+                <div class="tech-card">
+                    <h3>Papel Ahumado (Nano-Carbón y Nano-Cerámico)</h3>
+                    <p>Diseñado para proporcionar el máximo confort térmico y privacidad visual, bloqueando la radiación solar sin descuidar el diseño elegante de tu vehículo.</p>
+                    <ul class="tech-list">
+                        <li>Bloqueo superior de rayos infrarrojos y calor extremo.</li>
+                        <li>Tecnologías Nano-Carbón (mate duradero) y Nano-Cerámica (máxima claridad).</li>
+                        <li>Protección del 99.9% frente a rayos ultravioleta (UV).</li>
+                        <li>Cero interferencia con señales GPS, Wi-Fi o Bluetooth.</li>
+                    </ul>
+                </div>
+
+                <!-- Papel de Seguridad -->
+                <div class="tech-card" style="border-left-color: #0f172a;">
+                    <h3>Papel de Seguridad (Anti-Impacto)</h3>
+                    <p>Láminas de alta resistencia de múltiples micras de espesor diseñadas para reforzar los cristales de carros y camionetas frente a impactos y robos.</p>
+                    <ul class="tech-list">
+                        <li>Evita que el vidrio estalle en mil pedazos ante golpes o robos express.</li>
+                        <li>Absorbe y disipa la energía de impactos directos o piedras.</li>
+                        <li>Disponible en versiones transparentes y con tonalidad ahumada integrada.</li>
+                        <li>Mayor seguridad y tranquilidad para ocupantes en todo momento.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECCIÓN BENEFICIOS -->
+        <div id="beneficios" class="page-section">
+            <h2 class="section-title">Beneficios del Papel Ahumado y de Seguridad</h2>
+            <div class="benefits-grid">
+                <div class="benefit-card">
+                    <h4>Protección Antivandálica</h4>
+                    <p>El papel de seguridad mantiene los fragmentos de vidrio unidos en caso de rotura, protegiendo a los pasajeros de cortes y evitando accesos fáciles por la fuerza.</p>
+                </div>
+                <div class="benefit-card">
+                    <h4>Control Térmico Avanzado</h4>
+                    <p>Reduce de forma drástica la entrada de calor al habitáculo, logrando que el aire acondicionado trabaje con mayor eficiencia y ahorrando combustible.</p>
+                </div>
+                <div class="benefit-card">
+                    <h4>Privacidad y Discreción</h4>
+                    <p>Evita miradas indiscretas desde el exterior hacia el interior del vehículo, manteniendo tus pertenencias personales totalmente a resguardo.</p>
+                </div>
+                <div class="benefit-card">
+                    <h4>Protección de Tapicería y Piel</h4>
+                    <p>Bloquea la radiación UV que causa la decoloración de asientos, tableros y plásticos, además de cuidar la salud de tu piel durante trayectos largos.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECCIÓN TONALIDADES -->
+        <div id="tonalidades" class="page-section">
+            <h2 class="section-title">Guía de Tonalidades y Opciones</h2>
+            
+            <!-- Bloque Papel Ahumado -->
+            <h3 class="subsection-title">Opciones de Papel Ahumado</h3>
+            <div class="grid">
+                <div class="card">
+                    <h3>Tonalidad 5% (Oscuro Total)</h3>
+                    <p>Privacidad absoluta y máxima reducción de luz. Perfecto para quienes buscan un aspecto imponente y la máxima intimidad interior.</p>
+                </div>
+                <div class="card">
+                    <h3>Tonalidad 20% (Intermedio)</h3>
+                    <p>El equilibrio ideal para carros y camionetas. Estética sobria con gran visibilidad interna y excelente control solar.</p>
+                </div>
+                <div class="card">
+                    <h3>Tonalidad 35% (Claro)</h3>
+                    <p>Protección térmica discreta. Conserva una excelente visión nocturna y claridad sin alterar fuertemente la transparencia del cristal.</p>
+                </div>
+            </div>
+
+            <!-- Bloque Papel de Seguridad -->
+            <h3 class="subsection-title">Opciones de Papel de Seguridad (Anti-Impacto)</h3>
+            <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));">
+                <div class="card">
+                    <h3>Papel de Seguridad Transparente</h3>
+                    <p>Lámina de alta resistencia estructural de múltiples micras sin oscurecer los cristales. Brinda protección anti-impacto conservando la visibilidad original del vehículo.</p>
+                </div>
+                <div class="card">
+                    <h3>Papel de Seguridad a Color</h3>
+                    <p>Combina la máxima fuerza estructural antivandálica con la privacidad y el estilo de las tonalidades oscuras. Protección reforzada con elegancia visual.</p>
+                </div>
+            </div>
+        </div>
+
+       <!-- SECCIÓN RESULTADOS -->
+        <div id="resultados" class="page-section">
+            <h2 class="section-title">Resultados: Antes y Después</h2>
+            <div class="comparison-grid">
+                <!-- Carro -->
+                <div class="comparison-card">
+                    <div class="comparison-title">Instalación en Carros</div>
+                    <div class="image-container">
+                        <div class="img-box">
+                            <span class="before">Antes</span>
+                            <img src="imagenes/carro-antes.jpg.jpeg" alt="Carro sin papel ahumado">
+                        </div>
+                        <div class="img-box">
+                            <span class="after">Después</span>
+                            <img src="imagenes/carro-despues.jpg.jpeg" alt="Carro con papel instalado">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Camioneta -->
+                <div class="comparison-card">
+                    <div class="comparison-title">Instalación en Camionetas</div>
+                    <div class="image-container">
+                        <div class="img-box">
+                            <span class="before">Antes</span>
+                            <img src="imagenes/camioneta-antes.jpg.jpeg" alt="Camioneta sin papel ahumado">
+                        </div>
+                        <div class="img-box">
+                            <span class="after">Después</span>
+                            <img src="imagenes/camioneta-despues.jpg.jpeg" alt="Camioneta con papel instalado">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+      
+        <!-- SECCIÓN OPINIONES -->
+        <div id="opiniones" class="page-section">
+            <h2 class="section-title">Lo que dicen nuestros clientes</h2>
+            <div class="reviews-grid">
+                <div class="review-card">
+                    <div class="stars">★★★★★</div>
+                    <p>"Excelente trabajo del Sr. Alberto. Vino hasta la casa en Chacao e instaló el papel Nano-Cerámico a mi camioneta. Impecable, sin burbujas y el calor dentro del carro bajó muchísimo."</p>
+                    <div class="reviewer-name">— Carlos M. (Camioneta Fortuner)</div>
+                </div>
+                <div class="review-card">
+                    <div class="stars">★★★★★</div>
+                    <p>"Atención de primera y súper puntual. Instaló el papel de seguridad en los vidrios de mi vehículo. Se notan los 25 años de experiencia que tiene en el ramo."</p>
+                    <div class="reviewer-name">— Andrea G. (Sedán)</div>
+                </div>
+                <div class="review-card">
+                    <div class="stars">★★★★★</div>
+                    <p>"Súper cómodo el servicio a domicilio. El acabado en las esquinas quedó perfecto. Muy recomendado por precio y calidad."</p>
+                    <div class="reviewer-name">— Roberto S. (Carro Particular)</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECCIÓN CONTACTO -->
+        <div id="contacto" class="page-section">
+            <h2 class="section-title">Contacto & Cotizaciones</h2>
+            <div class="contact-box">
+                <h3>Servicio a Domicilio en Caracas</h3>
+                <div class="sub-name">Alberto Cárdenas — Más de 25 años de experiencia</div>
+                <p>Atención directa en tu residencia o lugar de trabajo. Haz clic en cualquiera de los números para agendar tu cita por WhatsApp:</p>
+                
+                <div class="phone-numbers">
+                    <a href="https://wa.me/584141082878?text=Hola%20Sr.%20Alberto,%20quisiera%20cotizar%20un%20trabajo%20a%20domicilio%20en%20Caracas." target="_blank" class="whatsapp-btn">
+                        💬 Contactar al 0414-1082878
+                    </a>
+                    <a href="https://wa.me/584120213339?text=Hola%20Sr.%20Alberto,%20quisiera%20cotizar%20un%20trabajo%20a%20domicilio%20en%20Caracas." target="_blank" class="whatsapp-btn">
+                        💬 Contactar al 0412-0213339
+                    </a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Botón Flotante de WhatsApp -->
+    <a href="https://wa.me/584141082878?text=Hola%20Sr.%20Alberto,%20quisiera%20solicitar%20informaci%C3%B3n%20sobre%20el%20servicio%20a%20domicilio%20en%20Caracas." class="float-whatsapp" target="_blank" title="Escríbenos por WhatsApp">
+        💬
+    </a>
+
+    <script>
+        function cambiarSeccion(idSeccion, elementoEnlace) {
+            const secciones = document.querySelectorAll('.page-section');
+            secciones.forEach(sec => sec.classList.remove('active'));
+
+            document.getElementById(idSeccion).classList.add('active');
+
+            const enlaces = document.querySelectorAll('.nav-links a');
+            enlaces.forEach(enlace => enlace.classList.remove('active'));
+            elementoEnlace.classList.add('active');
+        }
+    </script>
+
+</body>
+</html>
